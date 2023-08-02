@@ -1,0 +1,9 @@
+version: "3.6"
+services:
+
+  gems:
+    build: .
+    container_name: gems-django-app
+    ports:
+      - 8000:8000
+    restart: on-failure
