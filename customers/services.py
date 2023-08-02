@@ -2,8 +2,9 @@ import csv
 import io
 from datetime import datetime
 
-from customers.models import Deal, Customer, Gem
 from django.core.files.uploadedfile import InMemoryUploadedFile
+
+from customers.models import Deal, Customer, Gem
 
 
 def parse_csv_file(file: InMemoryUploadedFile) -> list[Deal]:

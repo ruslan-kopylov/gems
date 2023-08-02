@@ -19,5 +19,3 @@ class CustomerSerializer(serializers.ModelSerializer):
         for customer in top_five:
             other_gems.update({deal.gem.name for deal in customer.deals.all()})
         return list(my_gems.intersection(other_gems))
-
-
