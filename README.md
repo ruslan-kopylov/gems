@@ -8,7 +8,7 @@
 
 Отправить POST запрос:
 
-form-data: key - deals, value - file.csv
+form-data: key - deals, value - {file.csv}
 
 http://0.0.0.0:8000/api/load_deals/
 

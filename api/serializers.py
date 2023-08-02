@@ -1,6 +1,8 @@
+from django.core.cache import cache
 from rest_framework import serializers
 
 from customers.models import Customer
+from customers.services import get_top_five_customers
 
 
 class CustomerSerializer(serializers.ModelSerializer):
@@ -12,10 +14,15 @@ class CustomerSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def get_gems(obj):
+        gems = cache.get('gems')
+        if gems:
+            return gems
         my_gems = {deal.gem.name for deal in obj.deals.all()}
-        top_five = Customer.top_five_customers()
+        top_five = get_top_five_customers()
         top_five.remove(obj)
         other_gems = set()
         for customer in top_five:
             other_gems.update({deal.gem.name for deal in customer.deals.all()})
-        return list(my_gems.intersection(other_gems))
+        gems = list(my_gems.intersection(other_gems))
+        cache.set('gems', gems)
+        return gems
