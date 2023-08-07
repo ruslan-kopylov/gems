@@ -33,7 +33,7 @@ def get_top_five_customers():
     top_customers = cache.get('top_customers')
     if top_customers:
         return top_customers
-    customers = Customer.objects.all()
+    customers = Customer.objects.prefetch_related('deals__gem').all()
     rating = {customer.spent_money: customer for customer in customers}
     money = list(rating.keys())
     money.sort(reverse=True)
